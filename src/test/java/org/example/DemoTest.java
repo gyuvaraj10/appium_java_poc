@@ -53,7 +53,7 @@ public class DemoTest {
         // passwordTextBox.sendKeys(json.get("password").getAsString());
         loginButton.click();
         Thread.sleep(10000);
-        driver.close();
+        // d.close();
     }
 
     private static WebElement waitFor(By elemeent, WebDriver driver) throws Exception {
