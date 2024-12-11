@@ -3,9 +3,14 @@
  */
 package org.example;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import java.io.File;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.time.Duration;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,12 +23,6 @@ import com.google.gson.JsonParser;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
-import java.io.File;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.time.Duration;
-
-import org.apache.commons.io.*;
 
 public class DemoTest {
  
@@ -41,21 +40,25 @@ public class DemoTest {
         caps.setCapability("appium:appWaitDuration", 60000);
         AndroidDriver driver = new AndroidDriver(new URL("http://localhost:4723"),caps);
         Thread.sleep(20000);
-        WebElement logiIcon = waitFor(driver.findElement(AppiumBy.xpath("//android.widget.View[@content-desc=\"Login\"]")), driver);
-        WebElement emailTextBox = waitFor(driver.findElement(AppiumBy.accessibilityId("input-email")), driver);
-        WebElement passwordTextBox = waitFor(driver.findElement(AppiumBy.accessibilityId("input-password")), driver);
-        WebElement loginButton = waitFor(driver.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"button-LOGIN\"]/android.view.ViewGroup")), driver);
+        WebElement logiIcon = waitFor(AppiumBy.accessibilityId("Login"), driver);
         logiIcon.click();
-        Thread.sleep(5000);
+        WebElement emailTextBox = waitFor(AppiumBy.accessibilityId("input-email"), driver);
         emailTextBox.sendKeys(json.get("username").getAsString());
+        WebElement passwordTextBox = waitFor(AppiumBy.accessibilityId("input-password"), driver);
         passwordTextBox.sendKeys(json.get("password").getAsString());
+        WebElement loginButton = waitFor(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"button-LOGIN\"]/android.view.ViewGroup"), driver);
+        
+        // Thread.sleep(5000);
+       
+        // passwordTextBox.sendKeys(json.get("password").getAsString());
         loginButton.click();
         Thread.sleep(10000);
         driver.close();
     }
 
-    private static WebElement waitFor(WebElement elemeent, WebDriver driver) throws Exception {
+    private static WebElement waitFor(By elemeent, WebDriver driver) throws Exception {
         WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(600));
-        return w.pollingEvery(Duration.ofSeconds(50)).until(ExpectedConditions.elementToBeClickable(elemeent));
+        w.pollingEvery(Duration.ofSeconds(50)).until(ExpectedConditions.elementToBeClickable(elemeent));
+        return driver.findElement(elemeent);
     }
 }
