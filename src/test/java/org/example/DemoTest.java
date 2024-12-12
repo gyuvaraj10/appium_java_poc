@@ -43,6 +43,7 @@ public class DemoTest {
         WebElement logiIcon = waitFor(AppiumBy.accessibilityId("Login"), driver);
         logiIcon.click();
         WebElement emailTextBox = waitFor(AppiumBy.accessibilityId("input-email"), driver);
+        emailTextBox.click();
         emailTextBox.sendKeys(json.get("username").getAsString());
         WebElement passwordTextBox = waitFor(AppiumBy.accessibilityId("input-password"), driver);
         passwordTextBox.sendKeys(json.get("password").getAsString());
