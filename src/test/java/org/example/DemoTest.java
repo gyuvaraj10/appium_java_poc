@@ -39,7 +39,7 @@ public class DemoTest {
         caps.setCapability("appium:deviceName", "emulator-5554");
         caps.setCapability("appium:appWaitDuration", 60000);
         AndroidDriver driver = new AndroidDriver(new URL("http://localhost:4723"),caps);
-        Thread.sleep(20000);
+        // Thread.sleep(20000);
         WebElement logiIcon = waitFor(AppiumBy.accessibilityId("Login"), driver);
         logiIcon.click();
         WebElement emailTextBox = waitFor(AppiumBy.accessibilityId("input-email"), driver);
@@ -53,7 +53,7 @@ public class DemoTest {
        
         // passwordTextBox.sendKeys(json.get("password").getAsString());
         loginButton.click();
-        Thread.sleep(10000);
+        // Thread.sleep(10000);
         // d.close();
     }
 
